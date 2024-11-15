@@ -1,501 +1,0 @@
-[1mdiff --git a/src/main/java/mypriorityqueue/Main.java b/src/main/java/mypriorityqueue/Main.java[m
-[1mindex 266cc1f..e63e5e6 100644[m
-[1m--- a/src/main/java/mypriorityqueue/Main.java[m
-[1m+++ b/src/main/java/mypriorityqueue/Main.java[m
-[36m@@ -16,16 +16,17 @@[m [mpublic class Main {[m
-         StudentPriorityQueue studentList2;[m
-         studentList2 = new StudentPriorityQueue();[m
-         int input;[m
-[31m-        for (int i = 0; i < 1000; i++) {[m
-[31m-            input = (int)(Math.random()*100)+1;[m
-[31m-            studentList.insertObject(input);[m
-[32m+[m[32m        for (int i = 0; i < 101; i++) {[m[41m[m
-[32m+[m[32m            //input = (int)(Math.random()*100)+1;[m[41m[m
-[32m+[m[32m            //studentList.insertObject(input);[m[41m[m
-[32m+[m[32m            studentList.insertObject(i);[m[41m[m
-         }[m
- [m
-         studentList.insertObject(2);[m
-         studentList.insertObject(3);[m
-         studentList.insertObject(1);[m
-         studentList.insertObject(5);[m
-[31m-        studentList.printQueueElements();[m
-[32m+[m[32m        studentList.printQueuePriorities();[m[41m[m
- [m
-         studentList2.insertObject(adam);[m
-         studentList2.insertObject(bob);[m
-[36m@@ -33,7 +34,7 @@[m [mpublic class Main {[m
-         studentList2.insertObject(hanna);[m
-         studentList2.insertObject(jesse);[m
- [m
-[31m-        studentList2.printQueueElements();[m
-[32m+[m[32m        studentList2.printQueuePriorities();[m[41m[m
- [m
-     }[m
- }[m
-\ No newline at end of file[m
-[1mdiff --git a/src/main/java/mypriorityqueue/MyPriorityQueue.java b/src/main/java/mypriorityqueue/MyPriorityQueue.java[m
-[1mindex fd2d9d1..ff84d76 100644[m
-[1m--- a/src/main/java/mypriorityqueue/MyPriorityQueue.java[m
-[1m+++ b/src/main/java/mypriorityqueue/MyPriorityQueue.java[m
-[36m@@ -5,13 +5,12 @@[m
-  * 9/9/24[m
-  */[m
- [m
-[31m-[m
-[31m-[m
- package mypriorityqueue;[m
-[32m+[m[41m[m
- import java.util.ArrayList;[m
- [m
- // Declaration of PriorityQueue class that is implemented using a binary max heap[m
-[31m-public class MyPriorityQueue<T extends Comparable<? super T>>{[m
-[32m+[m[32mpublic class MyPriorityQueue<T extends Comparable<? super T>> {[m[41m[m
-     // Declare a ArrayList object, students[m
-     protected ArrayList<T> queueObject;[m
- [m
-[36m@@ -20,31 +19,6 @@[m [mpublic class MyPriorityQueue<T extends Comparable<? super T>>{[m
-         queueObject = new ArrayList<>();[m
-     }[m
- [m
-[31m-    // Method to obtain index of parent node which is used to raise or float student objects to their correct[m
-[31m-    // place in the heap[m
-[31m-    static int getParentIndex(int currentIndex) {[m
-[31m-        return (currentIndex -1) / 2;[m
-[31m-    }[m
-[31m-[m
-[31m-    // Method to obtain the index of the left child of a parent located at currentIndex[m
-[31m-    static int getLeftChildIndex(int currentIndex) {[m
-[31m-        return (currentIndex * 2) + 1;[m
-[31m-    }[m
-[31m-[m
-[31m-    // Method to obtain the index of the right child of a parent located at currentIndex[m
-[31m-    static int getRightChildIndex(int currentIndex) {[m
-[31m-        return (currentIndex * 2) + 2;[m
-[31m-    }[m
-[31m-[m
-[31m-    // Method to swap two entries in the array by assigning the first entry to a temporary Student object, overriding that object[m
-[31m-    // with the other entry of the second Student object, and finally assigning the original entry assigned to temp to the location that[m
-[31m-    // was previously assigned to the second object.[m
-[31m-    public void swap(int firstIndex, int secondIndex) {[m
-[31m-        T temp = queueObject.get(firstIndex);[m
-[31m-        queueObject.set(firstIndex, queueObject.get(secondIndex));[m
-[31m-        queueObject.set(secondIndex, temp);[m
-[31m-    }[m
-[31m-[m
-     // Method to add Student object to the heap. It adds the student object to the end of the list and if the entries[m
-     // contained in the priorityQueue are greater than 1 it will call the raise method to move the entry to the correct[m
-     // position in the heap.[m
-[36m@@ -59,24 +33,74 @@[m [mpublic class MyPriorityQueue<T extends Comparable<? super T>>{[m
-     // object, then it sets the last entry to the first entry, removes the last entry, performs sink method on new root[m
-     // entry, and then returns the Student object that was originally removed from root.[m
-     public T removeRoot() {[m
-[31m-        T root = queueObject.getFirst();[m
-[32m+[m[32m        T root = getRoot();[m[41m[m
-         queueObject.set(0, queueObject.getLast());[m
-         queueObject.removeLast();[m
-         sink();[m
-         return root;[m
-     }[m
- [m
-[32m+[m[32m    public T getRoot() {[m[41m[m
-[32m+[m[32m        T first = queueObject.getFirst();[m[41m[m
-[32m+[m[32m        return first;[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    // Method to print all Student object entries contained in the heap[m[41m[m
-[32m+[m[32m    public void printQueuePriorities() {[m[41m[m
-[32m+[m[32m        MyPriorityQueue<T> temp = new MyPriorityQueue<>();[m[41m[m
-[32m+[m[32m        T root;[m[41m[m
-[32m+[m[32m        while (!queueObject.isEmpty()) {[m[41m[m
-[32m+[m[32m            root = removeRoot();[m[41m[m
-[32m+[m[32m            temp.insertObject(root);[m[41m[m
-[32m+[m[32m            printOutput(root);[m[41m[m
-[32m+[m[32m        }[m[41m[m
-[32m+[m[32m        System.out.println();[m[41m[m
-[32m+[m[32m        queueObject = temp.queueObject;[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    public void printOutput(T root) {[m[41m[m
-[32m+[m[32m        System.out.print(root + ", ");[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    // Method to obtain index of parent node which is used to raise or float student objects to their correct[m[41m[m
-[32m+[m[32m    // place in the heap[m[41m[m
-[32m+[m[32m    static int getParentIndex(int currentIndex) {[m[41m[m
-[32m+[m[32m        return (currentIndex - 1) / 2;[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    // Method to obtain the index of the left child of a parent located at currentIndex[m[41m[m
-[32m+[m[32m    static int getLeftChildIndex(int currentIndex) {[m[41m[m
-[32m+[m[32m        return (currentIndex * 2) + 1;[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    // Method to obtain the index of the right child of a parent located at currentIndex[m[41m[m
-[32m+[m[32m    static int getRightChildIndex(int currentIndex) {[m[41m[m
-[32m+[m[32m        return (currentIndex * 2) + 2;[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    // Method to swap two entries in the array by assigning the first entry to a temporary Student object, overriding that object[m[41m[m
-[32m+[m[32m    // with the other entry of the second Student object, and finally assigning the original entry assigned to temp to the location that[m[41m[m
-[32m+[m[32m    // was previously assigned to the second object.[m[41m[m
-[32m+[m[32m    public void swap(int IndexA, int IndexB) {[m[41m[m
-[32m+[m[32m        T temp = queueObject.get(IndexA);[m[41m[m
-[32m+[m[32m        queueObject.set(IndexA, queueObject.get(IndexB));[m[41m[m
-[32m+[m[32m        queueObject.set(IndexB, temp);[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-     // This method is to raise a new entry added to the heap that is always added to the end to its correct place in[m
-     // the heap by swapping with parent entries that have a lower priority.[m
-     public void raise() {[m
-         int arrayIndex = queueObject.size() - 1;[m
-[32m+[m[32m        int parentIndex = getParentIndex(arrayIndex);[m[41m[m
-         while (arrayIndex > 0[m
-[31m-                && (queueObject.get(getParentIndex(arrayIndex)).compareTo(queueObject.get(arrayIndex))) < 0) {[m
-[31m-            swap(getParentIndex(arrayIndex), arrayIndex);[m
-[32m+[m[32m                && (queueObject.get(parentIndex).compareTo(queueObject.get(arrayIndex))) < 0) {[m[41m[m
-[32m+[m[32m            swap(parentIndex, arrayIndex);[m[41m[m
-             arrayIndex = getParentIndex(arrayIndex);[m
-         }[m
-     }[m
- [m
-[32m+[m[41m[m
-[32m+[m[41m[m
-     // Method to sink an entry to it's correct place in the heap. This method is used when removing the highest priority[m
-     // entry from root by swapping the highest priority entry with the last entry in the heap, removing the last entry which[m
-     // was the highest priority entry, then using this sink method on the entry now located at the root of the heap.[m
-[36m@@ -85,12 +109,12 @@[m [mpublic class MyPriorityQueue<T extends Comparable<? super T>>{[m
-         int index = 0;[m
- [m
-         while (index < arraySize) {[m
-[31m-            int leftChildIndex = getLeftChildIndex(index);[m
-[32m+[m[32m            int leftChild = getLeftChildIndex(index);[m[41m[m
-             int rightChildIndex = getRightChildIndex(index);[m
-[31m-            int highPriorityChildIndex = leftChildIndex;[m
-[32m+[m[32m            int highPriorityChildIndex = leftChild;[m[41m[m
- [m
-             if (rightChildIndex < arraySize[m
-[31m-                    && queueObject.get(rightChildIndex).compareTo(queueObject.get(leftChildIndex)) > 0) {[m
-[32m+[m[32m                    && queueObject.get(rightChildIndex).compareTo(queueObject.get(leftChild)) > 0) {[m[41m[m
-                 highPriorityChildIndex = rightChildIndex;[m
-             }[m
- [m
-[36m@@ -103,21 +127,4 @@[m [mpublic class MyPriorityQueue<T extends Comparable<? super T>>{[m
-             }[m
-         }[m
-     }[m
-[31m-[m
-[31m-    // Method to print all Student object entries contained in the heap[m
-[31m-    public void printQueueElements() {[m
-[31m-        MyPriorityQueue<T> temp = new MyPriorityQueue<>();[m
-[31m-        T root;[m
-[31m-        while (!queueObject.isEmpty()) {[m
-[31m-            root = removeRoot();[m
-[31m-            temp.insertObject(root);[m
-[31m-            printOutput(root);[m
-[31m-        }[m
-[31m-        queueObject = temp.queueObject;[m
-[31m-    }[m
-[31m-[m
-[31m-    public void printOutput(T root) {[m
-[31m-        System.out.print(root + ", ");[m
-[31m-    }[m
-[31m-[m
- }[m
-[1mdiff --git a/src/main/java/mypriorityqueue/Student.java b/src/main/java/mypriorityqueue/Student.java[m
-[1mindex 3fe1117..37112e9 100644[m
-[1m--- a/src/main/java/mypriorityqueue/Student.java[m
-[1m+++ b/src/main/java/mypriorityqueue/Student.java[m
-[36m@@ -14,7 +14,6 @@[m [mpublic class Student implements Comparable<Student> {[m
-     String email;[m
-     float gpa;[m
-     int unitsTaken;[m
-[31m-    float priority;[m
- [m
-     // Constructor for Student class[m
-     public Student(String name, int redID, String email, float gpa, int unitsTaken) {[m
-[36m@@ -27,32 +26,39 @@[m [mpublic class Student implements Comparable<Student> {[m
-             try {[m
-                 throw new Exception();[m
-             } catch (Exception e) {[m
-[31m-                System.out.println("GPA must not be smaller than 0 or greater than 4.");[m
-[32m+[m[32m                System.out.println("GPA must not be smaller than 0 and no greater than 4.0.");[m[41m[m
-                 throw new RuntimeException(e);[m
-             }[m
-         }[m
-         this.unitsTaken = unitsTaken;[m
-[31m-        // Calls the calculatePriority method to assign the value for priority of Student object.[m
-[31m-        this.priority = calculatePriority(this.gpa, this.unitsTaken);[m
-[32m+[m[32m        if (this.unitsTaken < 0 || this.unitsTaken > 150) {[m[41m[m
-[32m+[m[32m            try {[m[41m[m
-[32m+[m[32m                throw new Exception();[m[41m[m
-[32m+[m[32m            } catch (Exception e) {[m[41m[m
-[32m+[m[32m                System.out.println("Units Taken must not be smaller than 0 and no greater than 150.");[m[41m[m
-[32m+[m[32m                throw new RuntimeException(e);[m[41m[m
-[32m+[m[32m            }[m[41m[m
-[32m+[m[32m        }[m[41m[m
-     }[m
- [m
-     // Method definition to calculatePriority from gpa and unitsTaken.[m
-     // Assignment requirements define priority as the sum of 30% of GPA and 70% of unitsTaken.[m
-[31m-    public float calculatePriority(float gpa, int unitsTaken) {[m
-[31m-        return gpa * 0.3F + unitsTaken * 0.7F;[m
-[32m+[m[32m    public float calculatePriority() {[m[41m[m
-[32m+[m[32m        return this.gpa * 0.3F + this.unitsTaken * 0.7F;[m[41m[m
-     }[m
- [m
-     // Method to return value for priority when called.[m
-     public float getPriority() {[m
-[31m-        return this.priority;[m
-[32m+[m[32m        return calculatePriority();[m[41m[m
-     }[m
- [m
-     // Method to print a name and redID of Student object.[m
-     void printStudent() {[m
-[31m-        System.out.println("Name: " + this.name + " redID: " + this.redID + " priority: " + this.priority);[m
-[32m+[m[32m        System.out.println("Name: " + this.name + " redID: " + this.redID + " priority: " + this.getPriority());[m[41m[m
-     }[m
- [m
-     public int compareTo(Student s) {[m
-[31m-        return Float.compare(this.priority, s.priority);[m
-[32m+[m[32m        float priority = this.gpa * 0.3F + this.unitsTaken * 0.7F;[m[41m[m
-[32m+[m[32m        return Float.compare(priority, s.getPriority());[m[41m[m
-     }[m
- }[m
-[1mdiff --git a/src/main/java/mypriorityqueue/StudentPriorityQueue.java b/src/main/java/mypriorityqueue/StudentPriorityQueue.java[m
-[1mindex 8b525f5..53e03a1 100644[m
-[1m--- a/src/main/java/mypriorityqueue/StudentPriorityQueue.java[m
-[1m+++ b/src/main/java/mypriorityqueue/StudentPriorityQueue.java[m
-[36m@@ -7,4 +7,9 @@[m [mpublic class StudentPriorityQueue extends MyPriorityQueue<Student> {[m
-     public void printOutput(Student priorityStudent) {[m
-         priorityStudent.printStudent();[m
-     }[m
-[32m+[m[41m[m
-[32m+[m[32m    public float calculatePriority(Student priorityStudent) {[m[41m[m
-[32m+[m[32m        return priorityStudent.gpa * 0.3F + priorityStudent.unitsTaken * 0.7F;[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
- }[m
-[1mdiff --git a/src/test/java/mypriorityqueue/MainTest.java b/src/test/java/mypriorityqueue/MainTest.java[m
-[1mindex 25b0573..7945b01 100644[m
-[1m--- a/src/test/java/mypriorityqueue/MainTest.java[m
-[1m+++ b/src/test/java/mypriorityqueue/MainTest.java[m
-[36m@@ -1,4 +1,42 @@[m
-[31m-import static org.junit.jupiter.api.Assertions.*;[m
-[31m-class MainTest {[m
-[31m-  [m
-[32m+[m[32mpackage mypriorityqueue;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mimport org.junit.jupiter.api.Test;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mimport static org.junit.jupiter.api.Assertions.*;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mclass MainTest {[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void main() {[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m        Student hanna = new Student("hanna", 123, "hanna@sdsu.edu", 3.3F, 120);[m[41m[m
-[32m+[m[32m        Student jesse = new Student("jesse", 1234, "hanna@sdsu.edu", 3.3F, 120);[m[41m[m
-[32m+[m[32m        Student adam = new Student("adam", 124, "adam@sdsu.edu", 3.4F, 120);[m[41m[m
-[32m+[m[32m        Student bob = new Student("bob", 123, "bob@sdsu.edu", 3.3F, 121);[m[41m[m
-[32m+[m[32m        Student chris = new Student("chris", 123, "chris@sdsu.edu", 3.2F, 120);[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m        MyPriorityQueue<Integer> studentList;[m[41m[m
-[32m+[m[32m        studentList = new MyPriorityQueue<>();[m[41m[m
-[32m+[m[32m        StudentPriorityQueue studentList2;[m[41m[m
-[32m+[m[32m        studentList2 = new StudentPriorityQueue();[m[41m[m
-[32m+[m[32m        int input;[m[41m[m
-[32m+[m[32m        for (int i = 0; i < 1000; i++) {[m[41m[m
-[32m+[m[32m            input = (int)(Math.random()*100)+1;[m[41m[m
-[32m+[m[32m            studentList.insertObject(input);[m[41m[m
-[32m+[m[32m        }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m        studentList.insertObject(2);[m[41m[m
-[32m+[m[32m        studentList.insertObject(3);[m[41m[m
-[32m+[m[32m        studentList.insertObject(1);[m[41m[m
-[32m+[m[32m        studentList.insertObject(5);[m[41m[m
-[32m+[m[32m        studentList.printQueuePriorities();[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m        studentList2.insertObject(adam);[m[41m[m
-[32m+[m[32m        studentList2.insertObject(bob);[m[41m[m
-[32m+[m[32m        studentList2.insertObject(chris);[m[41m[m
-[32m+[m[32m        studentList2.insertObject(hanna);[m[41m[m
-[32m+[m[32m        studentList2.insertObject(jesse);[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m        studentList2.printQueuePriorities();[m[41m[m
-[32m+[m[32m    }[m[41m[m
- }[m
-\ No newline at end of file[m
-[1mdiff --git a/src/test/java/mypriorityqueue/MyPriorityQueueTest.java b/src/test/java/mypriorityqueue/MyPriorityQueueTest.java[m
-[1mindex 6375b78..2a83b50 100644[m
-[1m--- a/src/test/java/mypriorityqueue/MyPriorityQueueTest.java[m
-[1m+++ b/src/test/java/mypriorityqueue/MyPriorityQueueTest.java[m
-[36m@@ -1,4 +1,71 @@[m
-[31m-import static org.junit.jupiter.api.Assertions.*;[m
-[31m-class MyPriorityQueueTest {[m
-[31m-  [m
-[32m+[m[32mpackage mypriorityqueue;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mimport org.junit.jupiter.api.Test;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mclass MyPriorityQueueTest {[m[41m[m
-[32m+[m[32m    static MyPriorityQueue<Integer> myPriorityQueue = new MyPriorityQueue<>();[m[41m[m
-[32m+[m[32m/*[m[41m[m
-[32m+[m[32m    @BeforeAll[m[41m[m
-[32m+[m[32m    void setUp() {[m[41m[m
-[32m+[m[32m        myPriorityQueue = new MyPriorityQueue<>();[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @AfterEach[m[41m[m
-[32m+[m[32m    void tearDown() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[32m*/[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void insertObject() {[m[41m[m
-[32m+[m[32m        int input;[m[41m[m
-[32m+[m[32m        for (int i = 0; i < 100; i++) {[m[41m[m
-[32m+[m[32m            input = (int)(Math.random()*100)+1;[m[41m[m
-[32m+[m[32m            myPriorityQueue.insertObject(input);[m[41m[m
-[32m+[m[32m        }[m[41m[m
-[32m+[m[32m        myPriorityQueue.printQueuePriorities();[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void removeRootTest() {[m[41m[m
-[32m+[m[32m        myPriorityQueue.removeRoot();[m[41m[m
-[32m+[m[32m        myPriorityQueue.printQueuePriorities();[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void getRoot() {[m[41m[m
-[32m+[m[32m        System.out.println(myPriorityQueue.getRoot());[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    void printQueuePriorities() {[m[41m[m
-[32m+[m[32m        myPriorityQueue.printQueuePriorities();[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void printOutput() {[m[41m[m
-[32m+[m[32m        printQueuePriorities();[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void getParentIndex() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void getLeftChildIndex() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void getRightChildIndex() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void swap() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void raise() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void sink() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
- }[m
-\ No newline at end of file[m
-[1mdiff --git a/src/test/java/mypriorityqueue/StudentPriorityQueueTest.java b/src/test/java/mypriorityqueue/StudentPriorityQueueTest.java[m
-[1mindex 84b38a4..a595d0e 100644[m
-[1m--- a/src/test/java/mypriorityqueue/StudentPriorityQueueTest.java[m
-[1m+++ b/src/test/java/mypriorityqueue/StudentPriorityQueueTest.java[m
-[36m@@ -1,4 +1,60 @@[m
-[31m-import static org.junit.jupiter.api.Assertions.*;[m
-[31m-class StudentPriorityQueueTest {[m
-[31m-  [m
-[32m+[m[32mpackage mypriorityqueue;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mimport org.junit.jupiter.api.Test;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mimport static org.junit.jupiter.api.Assertions.*;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mclass StudentPriorityQueueTest {[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void insertObject() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void removeRoot() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void getRoot() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void printQueuePriorities() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void printOutput() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void getParentIndex() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void getLeftChildIndex() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void getRightChildIndex() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void swap() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void raise() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void sink() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void testPrintOutput() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void calculatePriority() {[m[41m[m
-[32m+[m[32m    }[m[41m[m
- }[m
-\ No newline at end of file[m
-[1mdiff --git a/src/test/java/mypriorityqueue/StudentTest.java b/src/test/java/mypriorityqueue/StudentTest.java[m
-[1mindex de48c4a..9884e06 100644[m
-[1m--- a/src/test/java/mypriorityqueue/StudentTest.java[m
-[1m+++ b/src/test/java/mypriorityqueue/StudentTest.java[m
-[36m@@ -1,4 +1,43 @@[m
-[31m-import static org.junit.jupiter.api.Assertions.*;[m
-[31m-class StudentTest {[m
-[31m-  [m
-[32m+[m[32mpackage mypriorityqueue;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mimport org.junit.jupiter.api.BeforeAll;[m[41m[m
-[32m+[m[32mimport org.junit.jupiter.api.BeforeEach;[m[41m[m
-[32m+[m[32mimport org.junit.jupiter.api.Test;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mimport java.util.ArrayList;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mimport static org.junit.jupiter.api.Assertions.*;[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32mclass StudentTest {[m[41m[m
-[32m+[m[41m[m
-[32m+[m[41m[m
-[32m+[m[32m    @Test[m[41m[m
-[32m+[m[32m    void calculatePriority() {[m[41m[m
